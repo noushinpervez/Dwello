@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --text: #0a0a0a;
+    --background: #ffffff;
+    --primary: #1668e3;
+    --secondary: #0e3671;
+    --accent: #273ebe;
+    --border: #dedfe3;
+    --edge: #676a7e;
+    --card: #f7f7f8;
+    --dark: #0F0C36;
+    --primary-50: #e8f0fd;
+    --primary-100: #d1e1fa;
+    --inv-background: #000000;
+    --inv-text: #ffffff;
+
+    /* Font variables */
+    --font-recoleta: 'Recoleta', serif;
+    --font-euclid: 'Euclid Circular', sans-serif;
+  }
+
+  /* Dark mode */
+  .dark {
+    --text: #fafafa;
+    --background: #000000;
+    --primary: #1c6ee9;
+    --secondary: #0e3671;
+    --accent: #4157d8;
+    --border: #1c1d21;
+    --edge: #818498;
+    --card: #020a16;
+    --dark: #191e3b;
+    --primary-50: #020b17;
+    --primary-100: #05152e;
+    --inv-background: #ffffff;
+    --inv-text: #181d3a;
+  }
+
+  /* Applying the custom fonts globally */
+  body {
+    font-family: var(--font-euclid);
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font {
+    font-family: var(--font-recoleta);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.radial-gradient {
+  background: radial-gradient(circle at 50% 0%,
+      rgba(250, 250, 250, 0.05) 0%,
+      transparent 60%), rgba(15, 15, 15, 1);
+}
+
+.linear-mask {
+  mask-image: linear-gradient(-75deg,
+      white calc(var(--x) + 20%),
+      transparent calc(var(--x) + 30%),
+      white calc(var(--x) + 100%));
+  -webkit-mask-image: linear-gradient(-75deg,
+      white calc(var(--x) + 20%),
+      transparent calc(var(--x) + 30%),
+      white calc(var(--x) + 100%));
+}
+
+.linear-overlay {
+  background-image: linear-gradient(-75deg,
+      rgba(255, 255, 255, 0.1) calc(var(--x) + 20%),
+      rgba(255, 255, 255, 0.5) calc(var(--x) + 25%),
+      rgba(255, 255, 255, 0.1) calc(var(--x) + 100%));
+  mask: linear-gradient(black, black) content-box,
+    linear-gradient(blue, blue);
+  -webkit-mask: linear-gradient(black, black) content-box,
+    linear-gradient(black, black);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+}
+
+.line {
+  text-underline-offset: -0.3em;
+  text-decoration-skip-ink: none;
+  text-decoration-skip: none;
+}
+
+/*  
+.glass {
+  color: var(--background);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(10px);
+}
+
+.text-border-black,
+.text-border-black-small {
+  -webkit-text-fill-color: var(--background);
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: var(--inv-background);
+}
+
+.text-shadow-black {
+  text-shadow: 0 4px 0 var(--inv-background);
+}
+    */
