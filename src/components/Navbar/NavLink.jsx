@@ -7,14 +7,14 @@ const NavLink = ({ href, children, isActive }) => {
 
   return (
     <motion.div
-      className='relative flex flex-col md:items-center overflow-hidden'
+      className='relative flex flex-col md:items-center w-fit overflow-hidden gap-3 md:gap-0'
       onHoverStart={ () => setIsHovered(true) }
       onHoverEnd={ () => setIsHovered(false) }
       transition={ { duration: 0.5, ease: [0.4, 0, 0.2, 1] } }
     >
       { isActive && (
         <motion.div
-          className='absolute top-0 w-2 h-2 md:block hidden bg-primary rounded-full'
+          className='absolute top-0 left-[45%] w-2 h-2 bg-primary rounded-full'
           layoutId='activeCircle'
           initial={ { scale: 0 } }
           animate={ { scale: 1 } }
@@ -22,7 +22,7 @@ const NavLink = ({ href, children, isActive }) => {
           transition={ { duration: 0.5, ease: 'easeInOut' } }
         />
       ) }
-      <Link href={ href } className={ `hover:text-primary font-semibold px-2 py-2 text-2xl md:text-base ${isActive ? 'text-primary' : ''}` }>
+      <Link href={ href } className={ `hover:text-primary font-semibold px-2 pt-2.5 pb-0.5 text-2xl md:text-base ${isActive ? 'text-primary' : ''}` }>
         { children }
       </Link>
       <div

@@ -1,4 +1,5 @@
 'use client';
+
 import TextParallaxContent from './TextParallaxContent';
 
 const Hero = () => {

@@ -1,4 +1,5 @@
 'use client';
+
 import { motion, useTransform, useScroll } from 'framer-motion';
 import { useRef } from 'react';
 import Card from './Card';
@@ -13,13 +14,16 @@ const PropertyCategory = () => {
   const x = useTransform(scrollYProgress, [0, 1], ['1%', '-95%']);
 
   return (
-    <section ref={ targetRef } className='relative min-h-[200vh]'>
-      <div className='sticky top-1/4 overflow-hidden h-[60vh] grid'>
-        <motion.div style={ { x } } className='flex gap-4 -ml-8'>
-          { cards.map((card) => {
-            return <Card card={ card } key={ card.id } />;
-          }) }
-        </motion.div>
+    <section>
+      <h2 className='font-semibold mt-16 mb-6 text-2xl flex items-center'>Explore more properties to rent, including &#10230;</h2>
+      <div ref={ targetRef } className='relative min-h-[200vh]'>
+        <div className='sticky top-1/4 overflow-hidden h-[60vh] grid'>
+          <motion.div style={ { x } } className='flex gap-4 -ml-4 lg:-ml-7'>
+            { cards.map((card) => {
+              return <Card card={ card } key={ card.id } />;
+            }) }
+          </motion.div>
+        </div>
       </div>
     </section>
   );

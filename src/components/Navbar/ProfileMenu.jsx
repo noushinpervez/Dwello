@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { PiUserDuotone, PiHeartDuotone, PiSignOutDuotone } from 'react-icons/pi';
-import { IoNotificationsOutline } from 'react-icons/io5';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 

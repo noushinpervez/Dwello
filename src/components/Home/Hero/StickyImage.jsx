@@ -9,7 +9,6 @@ const StickyImage = ({ imgUrl }) => {
     target: targetRef,
     offset: ['end end', 'end start'],
   });
-  console.log(IMG_PADDING);
 
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.85]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);

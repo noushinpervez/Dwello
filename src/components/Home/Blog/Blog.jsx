@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -28,7 +30,7 @@ const Blog = () => {
 
   return (
     <section className='grid lg:grid-cols-2 grid-cols-1 items-center justify-between gap-12'>
-      <div className='w-full flex justify-center flex-col p-16 md:p-28 m-auto gap-8 h-full'
+      <div className='w-full flex justify-center flex-col py-28 px-16 md:p-28 m-auto gap-8 h-full'
         style={ {
           backgroundImage:
             'radial-gradient(var(--primary-100) 13%, transparent 0), radial-gradient(var(--primary-100) 13%, transparent 0)',
@@ -42,7 +44,7 @@ const Blog = () => {
           Advice from our experts to help you along your <span className='underline text-primary decoration-[#a2c4f6] decoration-wavy decoration-[3px] underline-offset-4'>rental journey</span>.
         </p>
       </div>
-      <div className='overflow-x-auto md:overflow-x-hidden lg:overflow-x-hidden px-4 md:px-16 gap-12 flex md:grid md:grid-cols-1 lg:grid-cols-1'>
+      <div className='overflow-x-auto md:overflow-x-hidden lg:overflow-x-hidden px-2 md:px-16 gap-12 flex md:grid md:grid-cols-1 lg:grid-cols-1'>
         <div className='flex flex-nowrap gap-12 md:flex-col lg:flex-col'>
           { blogPosts.map((post) => (
             <Link
@@ -56,8 +58,9 @@ const Blog = () => {
                 style={ { clipPath: 'polygon(50% 2.45%, 100% 38.77%, 100% 100%, 0% 99.55%, 0% 38.77%)' } }
                 src={ post.imageUrl }
                 alt={ post.title }
-                width={ 192 }
-                height={ 192 }
+                sizes='100vw'
+                height={ 0 }
+                width={ 0 }
               />
               <div className='space-y-3 text-lg col-span-1 md:col-span-6'>
                 <h5 className='font-semibold group-hover:underline hover:underline-offset-4 text-xl'>

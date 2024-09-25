@@ -1,16 +1,15 @@
 'use client';
+
 import { useState } from 'react';
-import Image from 'next/image';
-import logo from '@/assets/images/logo.png';
 import profileDefault from '@/assets/images/profile.png';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import ThemeToggle from './ThemeToggle';
 import { IoNotificationsOutline } from 'react-icons/io5';
-import { PiUserDuotone, PiHeartDuotone, PiSignOutDuotone } from 'react-icons/pi';
-import { HiMenuAlt2 } from 'react-icons/hi';
 import NavLink from './NavLink';
 import ProfileMenu from './ProfileMenu';
+import HamburgerButton from './HamburgerButton';
+import Logo from './Logo';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,39 +21,36 @@ const Navbar = () => {
   return (
     <nav className='font-medium'>
       <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
-        <div className='relative flex py-4 items-center justify-between'>
+        <div className='relative flex md:py-4 py-5 items-center justify-between'>
           <div className='absolute inset-y-0 left-0 flex items-center md:hidden'>
             {/* Mobile menu button */ }
-            <button
+            <div
               type='button'
               id='mobile-dropdown-button'
-              className='relative inline-flex items-center justify-center rounded-full p-2 text-primary hover:text-white hover:bg-primary focus:outline-none focus:ring-offset-background focus:ring-2 focus:ring-offset-2 focus:ring-primary'
+              className='relative inline-flex items-center justify-center rounded-full'
               aria-controls='mobile-menu'
               aria-expanded={ isMobileMenuOpen ? 'true' : 'false' }
               onClick={ () => setIsMobileMenuOpen(prev => !prev) }
             >
               <span className='absolute -inset-0.5'></span>
               <span className='sr-only'>Open main menu</span>
-              <HiMenuAlt2 className='block h-6 w-6' aria-hidden='true' />
-            </button>
+              <HamburgerButton />
+            </div>
           </div>
 
           <div className='flex flex-1 items-center justify-center md:items-stretch md:justify-start'>
             {/* Logo */ }
-            <Link className='flex flex-shrink-0 items-center' href='/'>
-              <Image className='h-12 w-auto rounded-xl' src={ logo } alt='ToletBD' />
-              <h1 className='hidden md:block text-4xl ml-3'>Dwello</h1>
-            </Link>
+            <Logo />
 
             {/* Desktop Menu hidden below md screens */ }
             <div className='hidden md:ml-6 md:block'>
-              <div className='flex space-x-2'>
+              <div className='flex space-x-2 place-items-end h-full'>
                 <NavLink href='/' isActive={ pathname === '/' }>Home</NavLink>
-                <p className='p-2'>|</p>
+                <p className='py-1 px-2 font-bold'>|</p>
                 <NavLink href='/properties' isActive={ pathname === '/properties' }>Properties</NavLink>
                 { isLoggedIn && (
                   <>
-                    <p className='p-2'>|</p>
+                    <p className='py-1 px-2 font-bold'>|</p>
                     <NavLink href='/properties/add' isActive={ pathname === '/properties/add' }>Add Property</NavLink>
                   </>
                 ) }
@@ -114,7 +110,7 @@ const Navbar = () => {
       {/* Mobile menu, show/hide based on menu state. */ }
       { isMobileMenuOpen && (
         <div id='mobile-menu'>
-          <div className='space-y-1 px-2 pb-3 pt-2 bg-card'>
+          <div className='space-y-1 px-2 py-3 bg-card'>
             <NavLink href='/' isActive={ pathname === '/' }>Home</NavLink>
             <NavLink href='/properties' isActive={ pathname === '/properties' }>Properties</NavLink>
             { isLoggedIn && (
@@ -126,8 +122,8 @@ const Navbar = () => {
                   <hr className='w-full mt-2 mb-4 mx-auto border-border border rounded-full' />
                 </div>
                 <div className='bg-dark py-3 -mx-2 flex justify-end'>
-                  <button className='m-3 flex items-center text-inv-text bg-primary hover:opacity-90 text-white rounded-full md:px-3 md:py-2 px-4 py-2 text-lg font-semibold'>
-                    <svg className='mr-2' stroke='currentColor' fill='currentColor' strokeWidth='0' viewBox='0 0 496 512' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'>
+                  <button className='m-3 flex items-center text-inv-text bg-primary hover:opacity-90 text-white rounded-full px-4 py-4 text-lg font-semibold'>
+                    <svg className='mr-2 w-5 h-5' stroke='currentColor' fill='currentColor' strokeWidth='0' viewBox='0 0 496 512' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'>
                       <path d='M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z'></path>
                     </svg>
                     <span>Login or Register</span>
