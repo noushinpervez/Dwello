@@ -14,7 +14,7 @@ import { signIn, useSession, getProviders } from 'next-auth/react';
 import { FaGoogle } from 'react-icons/fa6';
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -30,6 +30,10 @@ const Navbar = () => {
 
     fetchProviders();
   }, []);
+
+  const isLoading = status === 'loading';
+  const isLoggedIn = !!session;
+  const hasProviders = providers && Object.values(providers).length > 0;
 
   return (
     <nav className='font-medium'>
@@ -61,7 +65,7 @@ const Navbar = () => {
                 <NavLink href='/' isActive={ pathname === '/' }>Home</NavLink>
                 <p className='py-1 px-2 font-bold'>|</p>
                 <NavLink href='/properties' isActive={ pathname === '/properties' }>Properties</NavLink>
-                { session && (
+                { session && status !== 'loading' && (
                   <>
                     <p className='py-1 px-2 font-bold'>|</p>
                     <NavLink href='/properties/add' isActive={ pathname === '/properties/add' }>Add Property</NavLink>
@@ -72,26 +76,26 @@ const Navbar = () => {
           </div>
 
           {/* Right Side Menu (Logged Out) */ }
-          { !session && providers && Object.values(providers).length > 0 && (
-            <div className='hidden md:block md:ml-6'>
-              <div className='flex items-center'>
-                { Object.values(providers).map((provider, index) => (
-                  <button
-                    onClick={ () => signIn(provider.id) }
-                    key={ index }
-                    className='flex items-center justify-center text-inv-text bg-inv-background hover:opacity-90 rounded-full font-semibold p-4'
-                  >
-                    <FaGoogle className='mr-2' />
-                    <span>Login or Register</span>
-                  </button>
-                )) }
+          { !isLoggedIn && !isLoading && hasProviders && (
+              <div className='hidden md:block md:ml-6'>
+                <div className='flex items-center'>
+                  { Object.values(providers).map((provider, index) => (
+                    <button
+                      onClick={ () => signIn(provider.id) }
+                      key={ index }
+                      className='flex items-center justify-center text-inv-text bg-inv-background hover:opacity-90 rounded-full font-semibold p-4'
+                    >
+                      <FaGoogle className='mr-2' />
+                      <span>Login or Register</span>
+                    </button>
+                  )) }
+                </div>
               </div>
-            </div>
-          ) }
+            ) }
 
           {/* Right Side Menu (Logged In) */ }
           <div className='absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0'>
-            { session && (
+            { isLoggedIn && !isLoading && (
               <>
                 <Link href='/messages' className='relative group'>
                   <button
@@ -115,7 +119,7 @@ const Navbar = () => {
             ) }
 
             {/* Theme Toggle */ }
-            <div className={ `rounded-full transition-all duration-200 ${session ? 'md:ml-6 ml-3' : 'ml-0'}` }>
+            <div className={ `rounded-full transition-all duration-200 ${isLoggedIn ? 'md:ml-6 ml-3' : 'ml-0'}` }>
               <ThemeToggle />
             </div>
           </div>
@@ -131,7 +135,7 @@ const Navbar = () => {
             { session && (
               <NavLink href='/properties/add' isActive={ pathname === '/properties/add' }>Add Property</NavLink>
             ) }
-            { !session && providers && Object.values(providers).length > 0 && (
+            { !isLoggedIn && !isLoading && hasProviders && (
               <>
                 <div className='mx-2'>
                   <hr className='w-full mt-2 mb-4 mx-auto border-border border rounded-full' />

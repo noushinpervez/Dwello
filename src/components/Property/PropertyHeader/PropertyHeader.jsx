@@ -51,7 +51,7 @@ export const PropertyHeader = ({ images }) => {
         animate={ { translateX: `-${imgIndex * 100}%` } }
         transition={ SPRING_OPTIONS }
         onDragEnd={ onDragEnd }
-        className='flex cursor-grab items-center active:cursor-grabbing h-[85vh]'
+        className='flex cursor-grab items-center active:cursor-grabbing h-[87vh]'
       >
         <Images imgIndex={ imgIndex } images={ images } />
       </motion.div>

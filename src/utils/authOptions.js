@@ -16,27 +16,43 @@ export const authOptions = {
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ profile }) {
-      await connectDB();
+      try {
+        await connectDB();
 
-      const userExists = await User.findOne({ email: profile.email });
+        // Check if the user exists in the database
+        const userExists = await User.findOne({ email: profile.email });
 
-      if (!userExists) {
-        const username = profile.name.slice(0, 20);
-        await User.create({
-          email: profile.email,
-          username,
-          image: profile.picture,
-        });
+        if (!userExists) {
+          // Create a new user if not found
+          const username = profile.name.slice(0, 20); // Limit username length to 20 characters
+          await User.create({
+            email: profile.email,
+            username,
+            image: profile.picture,
+          });
+        }
+
+        return true;
+      } catch (error) {
+        console.error('Error in signIn callback:', error);
+        return false;
       }
-
-      return true;
     },
     async session({ session }) {
-      const user = await User.findOne({ email: session.user.email });
-      session.user.id = user._id.toString();
-      return session;
+      try {
+        // Fetch user from the database to include user ID in session
+        const user = await User.findOne({ email: session.user.email });
+        if (user) {
+          session.user.id = user._id.toString();
+        }
+        return session;
+      } catch (error) {
+        console.error('Error in session callback:', error);
+        return session;
+      }
     },
   },
 };

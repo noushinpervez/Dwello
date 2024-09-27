@@ -10,7 +10,7 @@ const recoleta = localFont({
     { path: '/fonts/Recoleta-Light.ttf', weight: '300', style: 'normal' },
     { path: '/fonts/Recoleta-Regular.ttf', weight: '400', style: 'normal' },
     { path: '/fonts/Recoleta-Medium.ttf', weight: '500', style: 'normal' },
-    { path: '/fonts/Recoleta-Semibold.ttf', weight: '600', style: 'normal' },
+    { path: '/fonts/Recoleta-SemiBold.ttf', weight: '600', style: 'normal' },
     { path: '/fonts/Recoleta-Bold.ttf', weight: '700', style: 'normal' },
     { path: '/fonts/Recoleta-Black.ttf', weight: '900', style: 'normal' },
   ],

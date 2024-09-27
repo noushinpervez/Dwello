@@ -2,10 +2,12 @@ import Image from 'next/image';
 import { PiUserDuotone, PiHeartDuotone, PiSignOutDuotone } from 'react-icons/pi';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
+import { toast } from 'react-toastify';
+import profileDefault from '@/assets/images/profile.png';
 
 const ProfileMenu = ({ user, isProfileMenuOpen, setIsProfileMenuOpen }) => {
   const profileImage = user?.image ? user?.image : profileDefault;
-  
+
   return (
     <div className='relative ml-3'>
       <button
@@ -18,14 +20,14 @@ const ProfileMenu = ({ user, isProfileMenuOpen, setIsProfileMenuOpen }) => {
       >
         <span className='absolute -inset-1.5'></span>
         <span className='sr-only'>Open user menu</span>
-        <Image className='h-8 w-8 rounded-full' src={ profileImage } width={0} height={0} sizes='100vw' alt='User' />
+        <Image className='h-8 w-8 rounded-full' src={ profileImage } width={ 0 } height={ 0 } sizes='100vw' alt='User' />
       </button>
 
       {/* Profile dropdown */ }
       { isProfileMenuOpen && (
         <div
           id='user-menu'
-          className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-2xl bg-background ring-1 ring-border focus:outline-none overflow-hidden'
+          className='absolute right-0 z-10 mt-2 min-w-60 origin-top-right rounded-2xl bg-background ring-1 ring-border focus:outline-none overflow-hidden'
           role='menu'
           aria-orientation='vertical'
           aria-labelledby='user-menu-button'
@@ -34,7 +36,7 @@ const ProfileMenu = ({ user, isProfileMenuOpen, setIsProfileMenuOpen }) => {
           <div className='flex items-center px-4 py-3 text-sm transition-colors duration-300 transform hover:text-primary'>
             <div className='mx-1'>
               <h1 className='font-semibold'>{ user?.name }</h1>
-              <p className='text-edge hover:text-secondary'>{ user?.email }</p>
+              <p className='text-edge hover:text-secondary text-xs line-clamp-1 text-ellipsis'>{ user?.email }</p>
             </div>
           </div>
           <hr className='border-border mx-4 rounded-full' />
@@ -59,9 +61,14 @@ const ProfileMenu = ({ user, isProfileMenuOpen, setIsProfileMenuOpen }) => {
             <span className='mx-1'>Saved Properties</span>
           </Link>
           <button
-            onClick={ () => {
+            onClick={ async () => {
               setIsProfileMenuOpen(false);
-              signOut;
+              try {
+                await signOut();
+                toast.success('Sign out successful');
+              } catch (error) {
+                console.error('Sign out error:', error);
+              }
             } }
             className='px-4 py-3 text-sm flex items-center transition-colors duration-300 transform hover:bg-border w-full hover:text-primary'
             role='menuitem'
