@@ -1,7 +1,9 @@
 import { FaBed, FaBath, FaRulerCombined, FaTimes, FaCheck, FaMapMarker } from 'react-icons/fa';
-// import PropertyMap from './PropertyMap';
+import PropertyMap from './PropertyMap';
 
 const PropertyDetails = ({ property }) => {
+  console.log(property);
+
   return (
     <main>
       <div className='text-center lg:text-left'>
@@ -83,7 +85,11 @@ const PropertyDetails = ({ property }) => {
       </div>
 
       <hr className='w-full my-8 mx-auto border-border border rounded-full' />
-      {/* <PropertyMap property={ property } /> */ }
+      <PropertyMap
+        street={ property.location.street }
+        city={ property.location.city }
+        state={ property.location.state }
+      />
     </main>
   );
 };

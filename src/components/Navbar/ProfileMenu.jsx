@@ -46,6 +46,7 @@ const ProfileMenu = ({ user, isProfileMenuOpen, setIsProfileMenuOpen }) => {
             role='menuitem'
             tabIndex='-1'
             id='user-menu-item-2'
+            onClick={ () => setIsProfileMenuOpen(false) }
           >
             <PiUserDuotone className='w-5 h-5 mx-1' />
             <span className='mx-1'>Your Profile</span>
@@ -56,6 +57,7 @@ const ProfileMenu = ({ user, isProfileMenuOpen, setIsProfileMenuOpen }) => {
             role='menuitem'
             tabIndex='-1'
             id='user-menu-item-3'
+            onClick={ () => setIsProfileMenuOpen(false) }
           >
             <PiHeartDuotone className='w-5 h-5 mx-1' />
             <span className='mx-1'>Saved Properties</span>

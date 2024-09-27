@@ -39,7 +39,7 @@ const Accordion = () => {
   };
 
   return (
-    <section className='no-scrollbar relative w-full overflow-hidden overflow-y-scroll mt-12 py-12 mx-auto max-w-3xl'>
+    <section className='relative w-full mt-12 py-12 mx-auto max-w-3xl'>
       <h3 className='mb-4 text-left lg:text-center text-3xl font-medium'>Frequently Asked Questions</h3>
       { faqData.map((faq, index) => (
         <div key={ index } className='border-b-[1px] border-b-border'>

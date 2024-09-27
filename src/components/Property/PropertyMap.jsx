@@ -1,94 +1,69 @@
-'use client';
-
 import { useEffect, useState } from 'react';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import Map, { Marker } from 'react-map-gl';
-import { setDefaults, fromAddress } from 'react-geocode';
-import Image from 'next/image';
-import pin from '@/assets/images/pin.svg';
-import Loading from '@/app/loading';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
-const PropertyMap = ({ property }) => {
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
-  const [viewport, setViewport] = useState({
-    latitude: 0,
-    longitude: 0,
-    zoom: 12,
-    width: '100%',
-    height: '500px',
-  });
-  const [loading, setLoading] = useState(true);
-  const [geocodeError, setGeocodeError] = useState(false);
-
-  setDefaults({
-    key: process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY,
-    language: 'en',
-    region: 'us',
-  });
+const PropertyMap = ({ street, city, state }) => {
+  const [coordinates, setCoordinates] = useState(null);
 
   useEffect(() => {
-    const fetchCoords = async () => {
-      try {
-        const res = await fromAddress(
-          `${property.location.street} ${property.location.city} ${property.location.state} ${property.location.zipcode}`
-        );
+    const address = `${street}, ${city}, ${state}`;
 
-        //  Check for results
-        if (res.results.length === 0) {
-          // No results found
-          setGeocodeError(true);
-          setLoading(false);
-          return;
-        }
+    const fetchCoordinates = async () => {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`
+      );
+      const data = await response.json();
 
-        const { lat, lng } = res.results[0].geometry.location;
-
-        setLat(lat);
-        setLng(lng);
-        setViewport({
-          ...viewport,
-          latitude: lat,
-          longitude: lng,
-        });
-
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setGeocodeError(true);
-        setLoading(false);
+      if (data && data.length > 0) {
+        const { lat, lon } = data[0]; // Extract coordinates
+        setCoordinates({ lat, lng: lon });
+      } else {
+        alert('Address not found');
       }
     };
 
-    fetchCoords();
-  }, []);
+    fetchCoordinates();
+  }, [street, city, state]);
 
-  if (loading) return <Loading />;
+  useEffect(() => {
+    // Ensure map is not reinitialized
+    let map;
 
-  // Handle case where geocoding failed
-  if (geocodeError) {
-    return <div className='text-xl'>No location data found</div>;
-  }
+    if (coordinates) {
+      // Clean up the existing map instance before reinitializing
+      if (map != null) {
+        map.remove();
+      }
 
-  return (
-    !loading && (
-      <Map
-        mapboxAccessToken={ process.env.NEXT_PUBLIC_MAPBOX_TOKEN }
-        mapLib={ import('mapbox-gl') }
-        initialViewState={ {
-          longitude: lng,
-          latitude: lat,
-          zoom: 15,
-        } }
-        style={ { width: '100%', height: 500 } }
-        mapStyle='mapbox://styles/mapbox/streets-v9'
-      >
-        <Marker longitude={ lng } latitude={ lat } anchor='bottom'>
-          <Image src={ pin } alt='location' width={ 40 } height={ 40 } />
-        </Marker>
-      </Map>
-    )
-  );
+      // Initialize map
+      map = L.map('map').setView([coordinates.lat, coordinates.lng], 13);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap contributors',
+      }).addTo(map);
+
+      // Create custom pin icon
+      const customIcon = L.icon({
+        iconUrl: '/images/pin.svg',
+        iconSize: [40, 40], // Size of the icon
+        iconAnchor: [20, 40], // Point where the icon is anchored (center bottom)
+        popupAnchor: [0, -40], // Point where the popup opens relative to the iconAnchor
+      });
+
+      // Add marker with custom pin
+      L.marker([coordinates.lat, coordinates.lng], { icon: customIcon }).addTo(map);
+    }
+
+    // Cleanup function to remove map on component unmount or re-render
+    return () => {
+      if (map) {
+        map.remove();
+      }
+    };
+  }, [coordinates]);
+
+  return <div id="map" style={ { height: '500px', width: '100%' } }></div>;
 };
 
 export default PropertyMap;
