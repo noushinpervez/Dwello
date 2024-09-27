@@ -1,6 +1,6 @@
 'use client'
 
-import { ThemeProvider } from 'next-themes'
+import { ThemeProvider, pageProps } from 'next-themes'
 
 const Theme = ({ children }) => {
   return (

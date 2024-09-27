@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Dropdown from './Dropdown';
 import LinkList from './LinkList';
-import Logo from '../Navbar/Logo';
+import Logo from './Logo';
 
 const companyLinks = [
   { href: '#', label: 'About Us' },
@@ -43,7 +43,7 @@ const Footer = () => {
   return (
     <footer
       className='relative h-[80vh] bg-card'
-      style={ { clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" } }
+      style={ { clipPath: 'polygon(0% 0, 100% 0%, 100% 100%, 0 100%)' } }
     >
       <div className='fixed bottom-0 h-[80vh] w-full'>
         <div className='py-10 max-w-2xl mx-auto container flex flex-col flex-shrink-0 gap-8 items-center h-full px-4 font-medium text-left md:text-center'>

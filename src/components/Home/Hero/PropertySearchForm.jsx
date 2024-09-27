@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import PropertyTypeList from './PropertyTypeList';
+import { FaSearch } from 'react-icons/fa';
 
 const PropertySearchForm = () => {
   const [location, setLocation] = useState('');
@@ -72,7 +73,7 @@ const PropertySearchForm = () => {
           type='text'
           id='location'
           placeholder='Enter Keywords or Location'
-          className='w-full px-6 py-4 text-text rounded-lg placeholder:text-edge border border-edge focus:outline-none focus:ring-2 focus:border-none focus:ring-primary dark:border-slate-700 bg-background'
+          className='w-full px-6 py-4 text-text rounded-lg placeholder:text-edge border border-edge focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-2 dark:border-slate-700 bg-background'
           value={ location }
           onChange={ (e) => setLocation(e.target.value) }
         />
@@ -81,7 +82,7 @@ const PropertySearchForm = () => {
       {/* Proper Category */ }
       <div className='relative w-full md:w-2/5 md:pl-1.5' ref={ dropdownRef }>
         <div
-          className='flex cursor-pointer items-center justify-between transition w-full px-6 py-4 rounded-lg text-edge border border-edge focus:outline-none focus:ring-2 focus:ring-primary focus:border-none bg-background dark:border-slate-700'
+          className='flex cursor-pointer items-center justify-between transition w-full px-6 py-4 rounded-lg text-edge border border-edge focus:ring-1 focus:ring-primary focus:ring-offset-2 focus:outline-none bg-background dark:border-slate-700'
           onClick={ () => setDropdownOpen(!dropdownOpen) }
           tabIndex='0'
         >
@@ -132,9 +133,9 @@ const PropertySearchForm = () => {
 
       <button
         type='submit'
-        className='md:ml-3 font-medium mt-4 md:mt-0 w-full md:w-auto px-8 py-4 text-lg rounded-full bg-primary text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background focus:ring-primary'
+        className='md:ml-3 mt-4 md:mt-0 md:w-auto px-8 py-4 text-xl gap-3 bg-primary hover:opacity-90 font-medium text-white rounded-full w-full focus:outline-none flex items-center justify-center ring-1 ring-primary ring-offset-background ring-offset-2 transition-all scale-[0.99] hover:scale-[1] hover:ring-transparent active:scale-[0.96] active:ring-primary'
       >
-        Search
+        <FaSearch />Search
       </button>
     </form>
   );

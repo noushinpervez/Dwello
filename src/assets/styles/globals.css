@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --text: #0a0a0a;
+    --text: #111827;
     --background: #ffffff;
     --primary: #1668e3;
     --secondary: #0e3671;
@@ -55,6 +55,8 @@
   h6,
   .font {
     font-family: var(--font-recoleta);
+    font-weight: 400;
+    font-style: normal;
   }
 }
 

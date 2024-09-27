@@ -15,10 +15,10 @@ const PropertyCategory = () => {
 
   return (
     <section>
-      <h2 className='font-semibold mt-16 mb-6 text-2xl flex items-center'>Explore more properties to rent, including &#10230;</h2>
-      <div ref={ targetRef } className='relative min-h-[200vh]'>
-        <div className='sticky top-1/4 overflow-hidden h-[60vh] grid'>
-          <motion.div style={ { x } } className='flex gap-4 -ml-4 lg:-ml-7'>
+      <h2 className='font-medium mt-16 mb-6 text-3xl flex items-center'>Explore more properties to rent, including &#10230;</h2>
+      <div ref={ targetRef } className='relative min-h-[150vh]'>
+        <div className='sticky top-1/4 overflow-hidden h-[50.5vh] grid'>
+          <motion.div style={ { x } } className='flex gap-4 -ml-[1%]'>
             { cards.map((card) => {
               return <Card card={ card } key={ card.id } />;
             }) }

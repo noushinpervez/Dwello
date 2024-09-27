@@ -1,5 +1,5 @@
 import StickyImage from './StickyImage';
-import OverlayCopy from './OverlayCopy';
+import OverlayCopy from './Overlay';
 
 const IMG_PADDING = 12;
 

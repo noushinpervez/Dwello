@@ -17,7 +17,7 @@ const Logo = () => {
         height={ 0 }
         sizes='100vw'
       />
-      <h1 className='hidden md:block text-4xl font-normal ml-3'>Dwello</h1>
+      <h1 className='block text-4xl font-normal ml-3'>Dwello</h1>
     </Link>
   );
 };

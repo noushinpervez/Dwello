@@ -2,7 +2,7 @@ import home from '@/assets/images/home.gif';
 
 const Loading = () => {
   const height = '90vh';
-  const background = 'var(--dark)';
+  const background = 'var(--background)';
   const imgUrl = home.src;
 
   return (
@@ -27,6 +27,7 @@ const Loading = () => {
           backgroundSize: 'cover',
           fontSize: 'clamp(3rem, 12vw, 10rem)',
           lineHeight: height,
+          WebkitTextStroke: '1.5px var(--primary)',
         } }
       >
         Loading...

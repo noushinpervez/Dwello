@@ -13,7 +13,7 @@ const LinkList = ({ links }) => (
 
       return Icon ? (
         <a key={ label } href={ href }>
-          <Icon className='w-8 h-8 bg-primary text-white p-2 rounded-full' />
+          <Icon className='w-8 h-8 bg-inv-background text-inv-text p-2 rounded-full' />
         </a>
       ) : null;
     }) }

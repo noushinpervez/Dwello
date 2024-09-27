@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import profileDefault from '@/assets/images/profile.png';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -10,13 +10,26 @@ import NavLink from './NavLink';
 import ProfileMenu from './ProfileMenu';
 import HamburgerButton from './HamburgerButton';
 import Logo from './Logo';
+import { signIn, useSession, getProviders } from 'next-auth/react';
+import { FaGoogle } from 'react-icons/fa6';
 
 const Navbar = () => {
+  const { data: session } = useSession();
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [providers, setProviders] = useState(null);
 
   const pathname = usePathname();
+
+  useEffect(() => {
+    const fetchProviders = async () => {
+      const res = await getProviders();
+      setProviders(res);
+    };
+
+    fetchProviders();
+  }, []);
 
   return (
     <nav className='font-medium'>
@@ -48,7 +61,7 @@ const Navbar = () => {
                 <NavLink href='/' isActive={ pathname === '/' }>Home</NavLink>
                 <p className='py-1 px-2 font-bold'>|</p>
                 <NavLink href='/properties' isActive={ pathname === '/properties' }>Properties</NavLink>
-                { isLoggedIn && (
+                { session && (
                   <>
                     <p className='py-1 px-2 font-bold'>|</p>
                     <NavLink href='/properties/add' isActive={ pathname === '/properties/add' }>Add Property</NavLink>
@@ -59,40 +72,42 @@ const Navbar = () => {
           </div>
 
           {/* Right Side Menu (Logged Out) */ }
-          { !isLoggedIn && (
+          { !session && providers && Object.values(providers).length > 0 && (
             <div className='hidden md:block md:ml-6'>
               <div className='flex items-center'>
-                <button className='flex items-center text-white bg-primary hover:opacity-90 rounded-full font-semibold p-4'>
-                  <svg className='mr-2 w-5 h-5' stroke='currentColor' fill='currentColor' strokeWidth='0' viewBox='0 0 496 512' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'>
-                    <path d='M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z'></path>
-                  </svg>
-                  <span>Login or Register</span>
-                </button>
+                { Object.values(providers).map((provider, index) => (
+                  <button
+                    onClick={ () => signIn(provider.id) }
+                    key={ index }
+                    className='flex items-center justify-center text-inv-text bg-inv-background hover:opacity-90 rounded-full font-semibold p-4'
+                  >
+                    <FaGoogle className='mr-2' />
+                    <span>Login or Register</span>
+                  </button>
+                )) }
               </div>
             </div>
           ) }
 
           {/* Right Side Menu (Logged In) */ }
           <div className='absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0'>
-            { isLoggedIn && (
+            { session && (
               <>
                 <Link href='/messages' className='relative group'>
                   <button
                     type='button'
-                    className='relative rounded-full bg-background border border-primary p-1 text-inv-text focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background'
+                    className='relative rounded-full bg-background border border-inv-background p-1 text-inv-text focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background'
                   >
                     <span className='absolute -inset-1.5'></span>
                     <span className='sr-only'>View notifications</span>
-                    <IoNotificationsOutline className='h-6 w-6 text-primary' aria-hidden='true' />
+                    <IoNotificationsOutline className='h-6 w-6 text-text' aria-hidden='true' />
                   </button>
-                  <span className='absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full'>
-                    2
-                  </span>
+                  <span className='absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full'>0</span>
                 </Link>
 
                 {/* Profile dropdown button */ }
                 <ProfileMenu
-                  profileImage={ profileDefault }
+                  user={ session?.user }
                   isProfileMenuOpen={ isProfileMenuOpen }
                   setIsProfileMenuOpen={ setIsProfileMenuOpen }
                 />
@@ -100,7 +115,7 @@ const Navbar = () => {
             ) }
 
             {/* Theme Toggle */ }
-            <div className={ `rounded-full transition-all duration-200 ${isLoggedIn ? 'md:ml-6 ml-3' : 'ml-0'}` }>
+            <div className={ `rounded-full transition-all duration-200 ${session ? 'md:ml-6 ml-3' : 'ml-0'}` }>
               <ThemeToggle />
             </div>
           </div>
@@ -113,21 +128,25 @@ const Navbar = () => {
           <div className='space-y-1 px-2 py-3 bg-card'>
             <NavLink href='/' isActive={ pathname === '/' }>Home</NavLink>
             <NavLink href='/properties' isActive={ pathname === '/properties' }>Properties</NavLink>
-            { isLoggedIn && (
+            { session && (
               <NavLink href='/properties/add' isActive={ pathname === '/properties/add' }>Add Property</NavLink>
             ) }
-            { !isLoggedIn && (
+            { !session && providers && Object.values(providers).length > 0 && (
               <>
                 <div className='mx-2'>
                   <hr className='w-full mt-2 mb-4 mx-auto border-border border rounded-full' />
                 </div>
                 <div className='bg-dark py-3 -mx-2 flex justify-end'>
-                  <button className='m-3 flex items-center text-inv-text bg-primary hover:opacity-90 text-white rounded-full px-4 py-4 text-lg font-semibold'>
-                    <svg className='mr-2 w-5 h-5' stroke='currentColor' fill='currentColor' strokeWidth='0' viewBox='0 0 496 512' height='1em' width='1em' xmlns='http://www.w3.org/2000/svg'>
-                      <path d='M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z'></path>
-                    </svg>
-                    <span>Login or Register</span>
-                  </button>
+                  { Object.values(providers).map((provider, index) => (
+                    <button
+                      onClick={ () => signIn(provider.id) }
+                      key={ index }
+                      className='m-3 flex items-center bg-inv-background hover:opacity-90 text-inv-text rounded-full px-4 py-4 text-lg font-semibold'
+                    >
+                      <FaGoogle className='mr-2' />
+                      <span>Login or Register</span>
+                    </button>
+                  )) }
                 </div>
               </>
             ) }

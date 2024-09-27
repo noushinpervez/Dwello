@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import Image from 'next/image';
 import { PiUserDuotone, PiHeartDuotone, PiSignOutDuotone } from 'react-icons/pi';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
-const ProfileMenu = ({ profileImage, isProfileMenuOpen, setIsProfileMenuOpen }) => {
-  const pathname = usePathname();
-
+const ProfileMenu = ({ user, isProfileMenuOpen, setIsProfileMenuOpen }) => {
+  const profileImage = user?.image ? user?.image : profileDefault;
+  
   return (
     <div className='relative ml-3'>
       <button
@@ -19,7 +18,7 @@ const ProfileMenu = ({ profileImage, isProfileMenuOpen, setIsProfileMenuOpen }) 
       >
         <span className='absolute -inset-1.5'></span>
         <span className='sr-only'>Open user menu</span>
-        <Image className='h-8 w-8 rounded-full' src={ profileImage } alt='User' />
+        <Image className='h-8 w-8 rounded-full' src={ profileImage } width={0} height={0} sizes='100vw' alt='User' />
       </button>
 
       {/* Profile dropdown */ }
@@ -34,8 +33,8 @@ const ProfileMenu = ({ profileImage, isProfileMenuOpen, setIsProfileMenuOpen }) 
         >
           <div className='flex items-center px-4 py-3 text-sm transition-colors duration-300 transform hover:text-primary'>
             <div className='mx-1'>
-              <h1 className='font-semibold'>Jane Doe</h1>
-              <p className='text-edge hover:text-secondary'>janedoe@example.com</p>
+              <h1 className='font-semibold'>{ user?.name }</h1>
+              <p className='text-edge hover:text-secondary'>{ user?.email }</p>
             </div>
           </div>
           <hr className='border-border mx-4 rounded-full' />
@@ -60,6 +59,10 @@ const ProfileMenu = ({ profileImage, isProfileMenuOpen, setIsProfileMenuOpen }) 
             <span className='mx-1'>Saved Properties</span>
           </Link>
           <button
+            onClick={ () => {
+              setIsProfileMenuOpen(false);
+              signOut;
+            } }
             className='px-4 py-3 text-sm flex items-center transition-colors duration-300 transform hover:bg-border w-full hover:text-primary'
             role='menuitem'
             tabIndex='-1'

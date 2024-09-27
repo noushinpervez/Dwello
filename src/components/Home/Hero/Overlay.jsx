@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import PropertySearchForm from './PropertySearchForm';
 
-const OverlayCopy = ({ subheading, heading }) => {
+const Overlay = ({ subheading, heading }) => {
   const targetRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -11,7 +11,7 @@ const OverlayCopy = ({ subheading, heading }) => {
   });
 
   const y = useTransform(scrollYProgress, [0, 1], [250, -250]);
-  const opacity = useTransform(scrollYProgress, [0.25, 0.5, 0.75], [0, 1, 0]);
+  const opacity = useTransform(scrollYProgress, [0.05, 0.5, 0.95], [0, 1, 0]);
 
   return (
     <motion.div
@@ -30,4 +30,4 @@ const OverlayCopy = ({ subheading, heading }) => {
   );
 };
 
-export default OverlayCopy;
+export default Overlay;

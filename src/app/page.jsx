@@ -1,4 +1,6 @@
+import Accordion from '@/components/Home/Accordion/Accordion';
 import Blog from '@/components/Home/Blog/Blog';
+import FeaturedProperties from '@/components/Home/FeaturedProperties/FeaturedProperties';
 import Hero from '@/components/Home/Hero/Hero';
 import HomeProperties from '@/components/Home/HomeProperties/HomeProperties';
 import PropertyCategory from '@/components/Home/PropertyCategory/PropertyCategory';
@@ -13,8 +15,10 @@ const HomePage = async () => {
         <SignInCard />
         <PropertyInfoBoxes />
         <PropertyCategory />
+        <FeaturedProperties />
         <HomeProperties />
         <Blog />
+        <Accordion />
       </div>
     </>
   );
