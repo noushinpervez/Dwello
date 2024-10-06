@@ -33,18 +33,10 @@ export const metadata = {
   description: 'Find your dream rental property',
   keywords: 'rental, find rentals, find properties',
   icons: {
-    icon: [
-      {
-        media: '(prefers-color-scheme: light)',
-        url: '/images/logo_light.png',
-        href: '/images/logo-light.png',
-      },
-      {
-        media: '(prefers-color-scheme: dark)',
-        url: '/images/logo_dark.png',
-        href: '/images/logo_dark.png',
-      },
-    ],
+    icon: {
+      url: '/images/logo.png',
+      href: '/images/logo.png',
+    },
   },
 };
 

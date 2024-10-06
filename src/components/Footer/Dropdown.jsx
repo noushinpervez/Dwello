@@ -25,10 +25,10 @@ const Dropdown = ({ id, label, links, openDropdown, handleDropdownToggle }) => (
     </div>
     <hr className='block md:hidden border border-border rounded-full my-3' />
     <ul className={ `flex flex-col space-y-2.5 ${openDropdown === id ? 'block' : 'hidden'} md:block` }>
-      <li className='hidden md:block'>{ label }</li>
+      <li className='hidden md:block text-primary'>{ label }</li>
       { links.map(link => (
         <li key={ link.label }>
-          <a href={ link.href } className='text-primary hover:underline hover:underline-offset-4'>{ link.label }</a>
+          <a href={ link.href } className='hover:underline hover:underline-offset-4'>{ link.label }</a>
         </li>
       )) }
     </ul>

@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 import { FaRegStar, FaStar } from 'react-icons/fa';
-import Loading from '@/app/loading';
 
 const PropertyBookmark = ({ property }) => {
   const { data: session } = useSession();
@@ -14,14 +13,14 @@ const PropertyBookmark = ({ property }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!userId) {
-      setLoading(false);
-      return;
-    }
-
     const checkBookmarkStatus = async () => {
+      if (!userId) {
+        setLoading(false);
+        return;
+      }
+
       try {
-        const res = await fetch('/api/bookmarks/check', {
+        const res = await fetch('/api/bookmark/check', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -31,12 +30,13 @@ const PropertyBookmark = ({ property }) => {
           }),
         });
 
-        if (res.status === 200) {
+        if (res.ok) {
           const data = await res.json();
           setIsBookmarked(data.isBookmarked);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        toast.error('Failed to check bookmark status');
       } finally {
         setLoading(false);
       }
@@ -52,7 +52,7 @@ const PropertyBookmark = ({ property }) => {
     }
 
     try {
-      const res = await fetch('/api/bookmarks', {
+      const res = await fetch('/api/bookmark', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,41 +62,35 @@ const PropertyBookmark = ({ property }) => {
         }),
       });
 
-      if (res.status === 200) {
+      if (res.ok) {
         const data = await res.json();
-        toast.success(data.message);
+        toast.success(`Bookmark ${data.isBookmarked ? 'added' : 'removed'} successfully!`);
         setIsBookmarked(data.isBookmarked);
+      } else {
+        toast.error('Failed to update bookmark status');
       }
     } catch (error) {
-      console.log(error);
-      toast.error('Something went wrong');
+      console.error(error);
+      toast.error('Something went wrong while updating bookmark');
     }
   };
 
   if (loading) {
-    return <p>Loading...</p>;
-  };
+    return <p className='text-edge font-medium'>Loading...</p>;
+  }
 
   if (!session) {
     return null;
   }
 
   return (
-    isBookmarked ? (
-      <button
-        onClick={ handleClick }
-        className='bg-red-500 hover:opacity-90 font-medium text-white py-3 px-4 rounded-full w-full focus:outline-none flex items-center justify-center ring-1 ring-red-500 ring-offset-background ring-offset-2 transition-all scale-[0.98] hover:scale-[1] hover:ring-transparent active:scale-[0.96] active:ring-primary'
-      >
-        <FaStar className='mr-2' /> Remove Bookmark
-      </button>
-    ) : (
-      <button
-        onClick={ handleClick }
-        className='bg-primary hover:opacity-90 font-medium text-white py-3 px-4 rounded-full w-full focus:outline-none flex items-center justify-center ring-1 ring-primary ring-offset-background ring-offset-2 transition-all scale-[0.98] hover:scale-[1] hover:ring-transparent active:scale-[0.96] active:ring-primary'
-      >
-        <FaRegStar className='mr-2' /><span>Bookmark Property</span>
-      </button>
-    )
+    <button
+      onClick={ handleClick }
+      className={ `font-medium text-white py-3 px-4 rounded-full w-full focus:outline-none flex items-center justify-center transition-all scale-[0.98] ${isBookmarked ? 'bg-red-500 hover:opacity-90' : 'bg-primary hover:opacity-90'}` }
+    >
+      { isBookmarked ? <FaStar className='mr-2 mb-1' /> : <FaRegStar className='mr-2 mb-1' /> }
+      { isBookmarked ? 'Remove Bookmark' : 'Bookmark Property' }
+    </button>
   );
 };
 

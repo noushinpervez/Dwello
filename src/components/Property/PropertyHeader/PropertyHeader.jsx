@@ -43,7 +43,7 @@ export const PropertyHeader = ({ images }) => {
   };
 
   return (
-    <div className='relative overflow-hidden py-6 -mx-4 sm:-mx-6 lg:-mx-8'>
+    <div className='relative overflow-hidden pb-6 -mx-4 sm:-mx-6 lg:-mx-8'>
       <motion.div
         drag='x'
         dragConstraints={ { left: 0, right: 0 } }
@@ -51,7 +51,7 @@ export const PropertyHeader = ({ images }) => {
         animate={ { translateX: `-${imgIndex * 100}%` } }
         transition={ SPRING_OPTIONS }
         onDragEnd={ onDragEnd }
-        className='flex cursor-grab items-center active:cursor-grabbing h-[87vh]'
+        className='flex cursor-grab items-center active:cursor-grabbing h-[75vh] md:h-[80vh]'
       >
         <Images imgIndex={ imgIndex } images={ images } />
       </motion.div>

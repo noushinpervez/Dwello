@@ -7,7 +7,7 @@ const NavLink = ({ href, children, isActive }) => {
 
   return (
     <motion.div
-      className='relative flex flex-col md:items-center w-fit overflow-hidden gap-3 md:gap-0'
+      className='relative flex flex-col md:items-center w-fit overflow-hidden gap-3 md:gap-0 mb-1'
       onHoverStart={ () => setIsHovered(true) }
       onHoverEnd={ () => setIsHovered(false) }
       transition={ { duration: 0.5, ease: [0.4, 0, 0.2, 1] } }

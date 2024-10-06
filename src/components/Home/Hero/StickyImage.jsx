@@ -1,7 +1,9 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-const IMG_PADDING = 12;
+const IMG_PADDING = 3;
+
+const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 768;
 
 const StickyImage = ({ imgUrl }) => {
   const targetRef = useRef(null);
@@ -19,8 +21,9 @@ const StickyImage = ({ imgUrl }) => {
         backgroundImage: `url(${imgUrl})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        height: `calc(100vh - ${IMG_PADDING * 2}px)`,
-
+        height: isSmallScreen
+          ? `calc(100vh - ${IMG_PADDING * 2}px)`
+          : `calc(91vh - ${IMG_PADDING * 2}px)`,
         top: IMG_PADDING,
         scale,
       } }

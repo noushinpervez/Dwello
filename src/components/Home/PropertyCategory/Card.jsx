@@ -1,8 +1,17 @@
+import { useRouter } from 'next/navigation';
+
 const Card = ({ card }) => {
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    router.push(`/properties/search-results?propertyType=${encodeURIComponent(card.title)}`);
+  };
+
   return (
     <div
       key={ card.id }
-      className='relative group h-[50vh] w-[80vw] md:w-[45vw] lg:w-[20vw] overflow-hidden rounded-2xl'
+      className='relative group h-[50vh] w-[80vw] md:w-[45vw] lg:w-[20vw] overflow-hidden rounded-2xl cursor-pointer'
+      onClick={ handleCardClick }
     >
       {/* Background Image */ }
       <div

@@ -17,6 +17,11 @@ const PropertySearchForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Check if at least one parameter is provided
+    if (location.trim() === '' && selectedPropertyTypes.length === 0) {
+      return;
+    }
+
     const propertyTypeQuery = selectedPropertyTypes.length ? selectedPropertyTypes.join(',') : 'All';
 
     router.push(`/properties/search-results?location=${location}&propertyType=${propertyTypeQuery}`);
@@ -51,7 +56,6 @@ const PropertySearchForm = () => {
     'Apartment/Flat',
     'Duplex Home',
     'Studio Apartment',
-    'Sublet/Room',
     'Plot',
     'Guest House',
     'Office Space',
@@ -60,6 +64,10 @@ const PropertySearchForm = () => {
     'Industrial Space',
   ];
 
+  // Display text for selected property types or default
+  const selectedTypes = selectedPropertyTypes.length > 0
+    ? selectedPropertyTypes.join(', ') : 'Property Category';
+
   return (
     <form
       ref={ formRef }
@@ -67,7 +75,7 @@ const PropertySearchForm = () => {
       onSubmit={ handleSubmit }
     >
       {/* Proper Keywords or Location */ }
-      <div className='w-full md:w-3/5 md:pr-1.5 mb-4 md:mb-0'>
+      <div className='w-full md:max-w-[70%] md:pr-1.5 mb-4 md:mb-0'>
         <label htmlFor='location' className='sr-only'>
           Location
         </label>
@@ -75,20 +83,20 @@ const PropertySearchForm = () => {
           type='text'
           id='location'
           placeholder='Enter Keywords or Location'
-          className='w-full px-6 py-4 text-text rounded-lg placeholder:text-edge border border-edge focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-2 dark:border-slate-700 bg-background'
+          className='w-full px-6 py-4 text-text rounded-lg placeholder:text-edge border border-edge focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background dark:border-slate-700 bg-background'
           value={ location }
           onChange={ (e) => setLocation(e.target.value) }
         />
       </div>
 
       {/* Proper Category */ }
-      <div className='relative w-full md:w-2/5 md:pl-1.5' ref={ dropdownRef }>
+      <div className='relative w-full md:max-w-[30%] md:pl-1.5' ref={ dropdownRef }>
         <div
-          className='flex cursor-pointer items-center justify-between transition w-full px-6 py-4 rounded-lg text-edge border border-edge focus:ring-1 focus:ring-primary focus:ring-offset-2 focus:outline-none bg-background dark:border-slate-700'
+          className='flex cursor-pointer items-center justify-between transition w-full px-6 py-4 rounded-lg text-edge border border-edge focus:ring-1 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background focus:outline-none bg-background dark:border-slate-700'
           onClick={ () => setDropdownOpen(!dropdownOpen) }
           tabIndex='0'
         >
-          <span>Property Category</span>
+          <span className='truncate'>{ selectedTypes }</span>
           <span className={ `transition ${dropdownOpen ? '-rotate-180' : ''}` }>
             <svg
               xmlns='http://www.w3.org/2000/svg'

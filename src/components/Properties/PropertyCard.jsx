@@ -52,15 +52,15 @@ const PropertyCard = ({ property, index }) => {
 
         <div className='flex justify-center flex-wrap gap-4 text-edge mb-4'>
           <p>
-            <FaBed className='inline mr-2 text-text opacity-80' /> { property.beds }
+            <FaBed className='inline mr-2 text-text opacity-80 mb-0.5' /> { property.beds }
             <span className='inline'> Beds</span>
           </p>
           <p>
-            <FaBath className='inline mr-2 text-text opacity-80' /> { property.baths }
+            <FaBath className='inline mr-2 text-text opacity-80 mb-0.5' /> { property.baths }
             <span className='inline'> Baths</span>
           </p>
           <p>
-            <svg className='inline-block mr-2 w-6 h-6 opacity-80' viewBox='0 0 24 24' fill='var(--text)'><path d='M6 18h2l-3 3-3-3h2V6c0-1.1.9-2 2-2h12V2l3 3-3 3V6H6v12zm14-8v2h-2v-2h2zm0 8a2 2 0 0 1-2 2v-2h2zm0-4v2h-2v-2h2zm-4 4v2h-2v-2h2zm-4 0v2h-2v-2h2z'></path></svg>{ ' ' }
+            <svg className='inline-block mr-2 w-6 h-6 opacity-80 mb-0.5' viewBox='0 0 24 24' fill='var(--text)'><path d='M6 18h2l-3 3-3-3h2V6c0-1.1.9-2 2-2h12V2l3 3-3 3V6H6v12zm14-8v2h-2v-2h2zm0 8a2 2 0 0 1-2 2v-2h2zm0-4v2h-2v-2h2zm-4 4v2h-2v-2h2zm-4 0v2h-2v-2h2z'></path></svg>{ ' ' }
             { property.square_feet }
             <span className='inline'> sqft</span>
           </p>
@@ -69,17 +69,17 @@ const PropertyCard = ({ property, index }) => {
         <div className='flex justify-center flex-wrap gap-4 text-accent text-sm mb-5'>
           { property.rates.nightly &&
             <p>
-              <FaMoneyBill className='inline mr-2' /> Nightly
+              <FaMoneyBill className='inline mr-2 mb-0.5' /> Nightly
             </p>
           }
           { property.rates.weekly &&
             <p>
-              <FaMoneyBill className='inline mr-2' /> Weekly
+              <FaMoneyBill className='inline mr-2 mb-0.5' /> Weekly
             </p>
           }
           { property.rates.monthly &&
             <p>
-              <FaMoneyBill className='inline mr-2' /> Monthly
+              <FaMoneyBill className='inline mr-2 mb-0.5' /> Monthly
             </p>
           }
         </div>
@@ -99,10 +99,10 @@ const PropertyCard = ({ property, index }) => {
             href={ `/properties/${property._id}` }
             className='bg-primary group-hover:bg-secondary rounded-full text-center relative inline-flex items-center justify-center flex-shrink-0 py-3 pl-4 pr-12 overflow-hidden font-semibold transition-all duration-150 ease-in-out group-hover:pl-10 group-hover:pr-6 group text-white'>
             <span className='absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12'>
-              <FiArrowUpRight className='w-5 h-5' />
+              <FiArrowUpRight className='w-5 h-5 mb-0.5' />
             </span>
             <span className='absolute left-0 pl-2.5 -translate-x-12 group-hover:translate-x-0 ease-out duration-200'>
-              <FiArrowUpRight className='w-5 h-5' />
+              <FiArrowUpRight className='w-5 h-5 mb-0.5' />
             </span>
             <span className='relative w-full text-left transition-colors duration-200 ease-in-out group-hover:text-white'>More info</span>
           </Link>

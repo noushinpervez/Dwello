@@ -1,7 +1,7 @@
 import StickyImage from './StickyImage';
 import OverlayCopy from './Overlay';
 
-const IMG_PADDING = 12;
+const IMG_PADDING = 3;
 
 const TextParallaxContent = ({ imgUrl, subheading, heading, children }) => {
   return (

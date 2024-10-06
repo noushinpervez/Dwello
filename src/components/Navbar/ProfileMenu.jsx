@@ -6,10 +6,10 @@ import { toast } from 'react-toastify';
 import profileDefault from '@/assets/images/profile.png';
 
 const ProfileMenu = ({ user, isProfileMenuOpen, setIsProfileMenuOpen }) => {
-  const profileImage = user?.image ? user?.image : profileDefault;
+  const profileImage = user.image ? user.image : profileDefault;
 
   return (
-    <div className='relative ml-3'>
+    <div className='relative ml-3 mb-1'>
       <button
         type='button'
         className='relative flex rounded-full bg-primary text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background'

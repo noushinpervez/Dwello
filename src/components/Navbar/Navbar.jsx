@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import profileDefault from '@/assets/images/profile.png';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import ThemeToggle from './ThemeToggle';
@@ -14,7 +13,7 @@ import { signIn, useSession, getProviders } from 'next-auth/react';
 import { FaGoogle } from 'react-icons/fa6';
 
 const Navbar = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
@@ -31,14 +30,13 @@ const Navbar = () => {
     fetchProviders();
   }, []);
 
-  const isLoading = status === 'loading';
   const isLoggedIn = !!session;
   const hasProviders = providers && Object.values(providers).length > 0;
 
   return (
     <nav className='font-medium'>
       <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
-        <div className='relative flex md:py-4 py-5 items-center justify-between'>
+        <div className='relative flex md:py-3.5 py-5 items-center justify-between'>
           <div className='absolute inset-y-0 left-0 flex items-center md:hidden'>
             {/* Mobile menu button */ }
             <div
@@ -63,11 +61,11 @@ const Navbar = () => {
             <div className='hidden md:ml-6 md:block'>
               <div className='flex space-x-2 place-items-end h-full'>
                 <NavLink href='/' isActive={ pathname === '/' }>Home</NavLink>
-                <p className='py-1 px-2 font-bold'>|</p>
+                <p className='py-1 px-2 font-bold mb-1'>|</p>
                 <NavLink href='/properties' isActive={ pathname === '/properties' }>Properties</NavLink>
-                { session && status !== 'loading' && (
+                { session && (
                   <>
-                    <p className='py-1 px-2 font-bold'>|</p>
+                    <p className='py-1 px-2 font-bold mb-1'>|</p>
                     <NavLink href='/properties/add' isActive={ pathname === '/properties/add' }>Add Property</NavLink>
                   </>
                 ) }
@@ -76,16 +74,16 @@ const Navbar = () => {
           </div>
 
           {/* Right Side Menu (Logged Out) */ }
-          { !isLoggedIn && !isLoading && hasProviders && (
+          { !isLoggedIn && hasProviders && (
               <div className='hidden md:block md:ml-6'>
                 <div className='flex items-center'>
                   { Object.values(providers).map((provider, index) => (
                     <button
                       onClick={ () => signIn(provider.id) }
                       key={ index }
-                      className='flex items-center justify-center text-inv-text bg-inv-background hover:opacity-90 rounded-full font-semibold p-4'
+                      className='flex items-center justify-center text-inv-text bg-inv-background hover:opacity-90 rounded-full font-semibold py-3 px-4 -my-1'
                     >
-                      <FaGoogle className='mr-2' />
+                      <FaGoogle className='mr-2 mb-0.5' />
                       <span>Login or Register</span>
                     </button>
                   )) }
@@ -95,7 +93,7 @@ const Navbar = () => {
 
           {/* Right Side Menu (Logged In) */ }
           <div className='absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0'>
-            { isLoggedIn && !isLoading && (
+            { isLoggedIn && (
               <>
                 <Link href='/messages' className='relative group'>
                   <button
@@ -135,7 +133,7 @@ const Navbar = () => {
             { session && (
               <NavLink href='/properties/add' isActive={ pathname === '/properties/add' }>Add Property</NavLink>
             ) }
-            { !isLoggedIn && !isLoading && hasProviders && (
+            { !isLoggedIn && hasProviders && (
               <>
                 <div className='mx-2'>
                   <hr className='w-full mt-2 mb-4 mx-auto border-border border rounded-full' />
@@ -147,7 +145,7 @@ const Navbar = () => {
                       key={ index }
                       className='m-3 flex items-center bg-inv-background hover:opacity-90 text-inv-text rounded-full px-4 py-4 text-lg font-semibold'
                     >
-                      <FaGoogle className='mr-2' />
+                      <FaGoogle className='mr-2 mb-0.5' />
                       <span>Login or Register</span>
                     </button>
                   )) }

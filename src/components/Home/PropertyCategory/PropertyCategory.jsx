@@ -3,7 +3,6 @@
 import { motion, useTransform, useScroll } from 'framer-motion';
 import { useRef } from 'react';
 import Card from './Card';
-import PropertyInfoBoxes from '../PropertyInfo/PropertyInfoBoxes';
 
 const PropertyCategory = () => {
   const targetRef = useRef(null);
@@ -33,33 +32,48 @@ export default PropertyCategory;
 
 const cards = [
   {
-    url: 'https://forever.travel-assets.com/flex/flexmanager/images/2024/03/06/VRBO_OOH_TRUST_LISBON_HOUSE_NATACHA_WIDE_BACKDOOR_HUMM_0004.jpg?impolicy=resizecrop&rh=590&cw=448&cx=-20&quot',
-    title: 'House',
+    url: 'https://images.unsplash.com/photo-1690987601363-83022d125159?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Apartment/Flat',
     id: 1,
   },
   {
-    url: 'https://forever.travel-assets.com/flex/flexmanager/images/2024/03/06/PARTNER_Historic_Chicago_Townhouse.jpg?impolicy=resizecrop&rh=590&cw=448&cx=-20&quot',
-    title: 'Apartment',
+    url: 'https://images.unsplash.com/photo-1643297551340-19d8ad4f20ad?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Duplex Home',
     id: 2,
   },
   {
-    url: 'https://forever.travel-assets.com/flex/flexmanager/images/2023/11/24/VRBO_APFT2_BARCELONA_THERIN_HOUSE_1_1460.jpg?impolicy=resizecrop&rh=590&cw=448&cx=-10&quot',
-    title: 'Cabin',
+    url: 'https://images.unsplash.com/photo-1610320022005-0e300dc23c92?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Studio Apartment',
     id: 3,
   },
   {
-    url: 'https://forever.travel-assets.com/flex/flexmanager/images/2024/03/08/PARTNER_Letterbox_Cottage_Cotswolds_v2.jpg?impolicy=resizecrop&rh=590&cw=448&cx=-50&quot',
-    title: 'Cottage',
+    url: 'https://images.unsplash.com/photo-1461175827210-5ceac3e39dd2?q=80&w=1933&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Plot',
     id: 4,
   },
   {
-    url: 'https://forever.travel-assets.com/flex/flexmanager/images/2024/03/08/6981bbd6_R3.jpg?impolicy=resizecrop&rh=590&cw=448&cx=-60&quot',
-    title: 'Villa',
+    url: 'https://images.unsplash.com/photo-1706756601729-6dcba36e6ce1?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Guest House',
     id: 5,
   },
   {
-    url: 'https://forever.travel-assets.com/flex/flexmanager/images/2024/03/04/PARTNER_Chalet_Rochefort_R2.jpg?impolicy=resizecrop&rh=590&cw=448&cx=-25&quot',
-    title: 'Chalot',
+    url: 'https://images.unsplash.com/photo-1505409859467-3a796fd5798e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Office Space',
     id: 6,
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Showroom/Shop/Restaurant',
+    id: 7,
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1720175369915-d941b2394228?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Agriculture/Farm Land',
+    id: 8,
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1644619536996-2ca08e989c97?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    title: 'Industrial Space',
+    id: 9,
   },
 ];
